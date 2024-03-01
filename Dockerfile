@@ -1,20 +1,44 @@
-# Use a imagem oficial do Node.js como base
-FROM node:latest
+# syntax = docker/dockerfile:1
 
-# Crie e defina o diretório de trabalho dentro do contêiner
-WORKDIR /usr/src/app
+# Adjust NODE_VERSION as desired
+ARG NODE_VERSION=20.10.0
+FROM node:${NODE_VERSION}-slim as base
 
-# Copie o package.json e o package-lock.json (se existir) para o diretório de trabalho
-COPY package*.json ./
+LABEL fly_launch_runtime="Node.js"
 
-# Instale as dependências da aplicação
-RUN npm install
+# Node.js app lives here
+WORKDIR /app
 
-# Copie todo o código-fonte da aplicação para o diretório de trabalho
-COPY . .
+# Set production environment
+ENV NODE_ENV="production"
 
-# Exponha a porta 3000 para acessar a aplicação
+
+# Throw-away build stage to reduce size of final image
+FROM base as build
+
+# Install packages needed to build node modules
+RUN apt-get update -qq && \
+    apt-get install -y build-essential pkg-config python-is-python3
+
+# Install node modules
+COPY --link package-lock.json package.json ./
+RUN npm ci
+
+# Copy application code
+COPY --link . .
+
+
+# Final stage for app image
+FROM base
+
+# Copy built application
+COPY --from=build /app /app
+
+# Setup sqlite3 on a separate volume
+RUN mkdir -p /data
+VOLUME /data
+
+# Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-
-# Comando para rodar a aplicação em modo de desenvolvimento
-CMD ["npm", "run", "dev"]
+ENV DATABASE_URL="file:///data/sqlite.db"
+CMD [ "node", "index.js" ]
