@@ -1,29 +1,20 @@
-# Use a imagem oficial do Node.js 21.6.2 (Current)
-FROM node:21.6.2
+# Use a imagem oficial do Node.js como base
+FROM node:latest
 
-# Defina o diretório de trabalho
-WORKDIR /app
+# Crie e defina o diretório de trabalho dentro do contêiner
+WORKDIR /usr/src/app
 
-# Copie os arquivos package.json e package-lock.json
+# Copie o package.json e o package-lock.json (se existir) para o diretório de trabalho
 COPY package*.json ./
 
-# Instale todas as dependências
+# Instale as dependências da aplicação
 RUN npm install
 
-# Copie o diretório prisma (se necessário)
-COPY prisma ./prisma
-
-# Gere o cliente Prisma (se necessário)
-RUN npx prisma generate
-
-# Copie todos os outros arquivos do projeto
+# Copie todo o código-fonte da aplicação para o diretório de trabalho
 COPY . .
 
-# Execute o comando de build (se necessário)
-RUN npm run build
-
-# Exponha a porta que seu aplicativo usará
+# Exponha a porta 3000 para acessar a aplicação
 EXPOSE 3000
 
-# Inicie o aplicativo
-CMD [ "npm", "start" ]
+# Comando para rodar a aplicação em modo de desenvolvimento
+CMD ["npm", "run", "dev"]
