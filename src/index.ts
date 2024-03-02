@@ -16,8 +16,7 @@ hasConnection();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-handleWebSocket(wss); // Chame a função handleWebSocket passando o servidor WebSocket
-
+handleWebSocket(wss); 
 app.get("/", (req: Request, res: Response) => {
     res.send({ api: "api" })
 })

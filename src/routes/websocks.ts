@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
+let total = 0 
 
 const handleWebSocket = (wss: WebSocket.Server) => {
-
   wss.on('connection', (ws) => {
     console.log('Client connected');
     ws.send("Você conectou em mim");
@@ -17,9 +17,9 @@ const handleWebSocket = (wss: WebSocket.Server) => {
     });
 
     const interval = setInterval(() => {
-      ws.send('Hello');
-      console.log('mensagem enviada')
-    }, 500);
+      ws.send('Mensagens respondida => '+ total++);
+      console.log('mensagem enviada' + total++)
+    }, 1);
 
     ws.on('close', () => {
       console.log('Client disconnected');
