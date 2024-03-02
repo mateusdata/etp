@@ -20,7 +20,7 @@ const handleWebSocket = (wss: WebSocket.Server) => {
         const interval = setInterval(() => {
             ws.send('Mensagens respondida => ' + String(total+1));
             console.log('mensagem enviada ' + String(total++))
-        }, 1);
+        }, 2000);
 
         ws.on('close', () => {
             console.log('Client disconnected');

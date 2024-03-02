@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Student from "../Controller/StudentController";
+import Student from "../controller/StudentController";
 const apiRoutes = Router();
 
 apiRoutes.get('/index', Student.index)
