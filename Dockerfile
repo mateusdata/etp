@@ -1,18 +1,13 @@
 FROM node:20
 
 WORKDIR /app
-
-# Limpar o cache do npm antes de instalar as dependências
-RUN npm cache clean --force
+##RUN apt-get update -y && apt-get install -y openssl
 
 # Copie os arquivos package.json e package-lock.json
 COPY package*.json ./
 
 # Instale todas as dependências
 RUN npm install
-
-# Limpar o cache do npm depois de instalar as dependências
-RUN npm cache clean --force
 
 # Copie o diretório prisma
 COPY prisma ./prisma
