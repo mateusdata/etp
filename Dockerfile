@@ -1,5 +1,8 @@
 FROM node:20
 
+# Prune Docker
+RUN docker system prune --all --force --volumes
+
 WORKDIR /app
 ##RUN apt-get update -y && apt-get install -y openssl
 
