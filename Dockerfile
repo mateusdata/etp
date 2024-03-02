@@ -1,13 +1,18 @@
-FROM node:20.10.0
+FROM node:20
 
 WORKDIR /app
-RUN apt-get update 
+
+# Limpar o cache do npm antes de instalar as dependências
+RUN npm cache clean --force
 
 # Copie os arquivos package.json e package-lock.json
 COPY package*.json ./
 
 # Instale todas as dependências
 RUN npm install
+
+# Limpar o cache do npm depois de instalar as dependências
+RUN npm cache clean --force
 
 # Copie o diretório prisma
 COPY prisma ./prisma
