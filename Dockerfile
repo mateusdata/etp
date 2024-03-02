@@ -1,7 +1,7 @@
 FROM node:20
 
 WORKDIR /app
-##RUN apt-get update -y && apt-get install -y openssl
+RUN apt-get update 
 
 # Copie os arquivos package.json e package-lock.json
 COPY package*.json ./
