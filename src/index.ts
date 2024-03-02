@@ -18,7 +18,7 @@ const wss = new WebSocket.Server({ server });
 
 handleWebSocket(wss); 
 app.get("/", (req: Request, res: Response) => {
-    res.send({ api: "api" })
+    res.send({ api: "api v1" })
 })
 app.use(apiRoutes);
 app.use(authRoutes);
