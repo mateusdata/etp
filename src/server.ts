@@ -6,9 +6,9 @@ import apiRoutes from './routes/api';
 import authRoutes from './routes/auth';
 import hasConnection from './config/testConection';
 import { handleWebSocket } from './routes/websocks';
-//api
+
 dotenv.config();
-const PORT = 5000;
+const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 hasConnection();
