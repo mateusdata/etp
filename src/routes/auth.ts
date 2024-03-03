@@ -9,7 +9,7 @@ authRoutes.post("/login", (req, res) => {
         password: yup.string().min(6, "a password tem que ter mais que 6 digito")
     });
     console.log(schema);
-    res.send("oiii");
+    res.send("vc esta logado");
 
 });
 
