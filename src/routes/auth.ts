@@ -13,4 +13,10 @@ authRoutes.post("/login", (req, res) => {
 
 });
 
+
+authRoutes.get("/docker", (req, res) => {
+    res.send("docker triste");
+});
+
+
 export default authRoutes;
