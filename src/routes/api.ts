@@ -1,10 +1,16 @@
 import { Router } from "express";
-import Student from "../controller/StudentController";
+import StudentController from "../controller/StudentController";
+import ConversationController from "../controller/ConversationController";
 const apiRoutes = Router();
 
-apiRoutes.get('/index', Student.index)
-apiRoutes.post('/create', Student.create);
-apiRoutes.delete("/delete/:id", Student.delete)
-apiRoutes.put("/update/:id", Student.update)
+apiRoutes.get('/index', StudentController.index)
+apiRoutes.post('/create', StudentController.create);
+apiRoutes.delete("/delete/:id", StudentController.delete)
+apiRoutes.put("/update/:id", StudentController.update)
+
+apiRoutes.post('/create-conversation', ConversationController.create);
+
+
+
 
 export default apiRoutes;

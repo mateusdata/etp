@@ -15,18 +15,23 @@ model Student {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  nome     String
-  email    String
+  id       Int       @id @default(autoincrement())
+  name     String
+  email    String    @unique
   password String
+  id_usu1 Conversa[] @relation("id_usu1")
+  id_usu2 Conversa[] @relation("id_usu2")
 
   @@map("user") // Define o nome da tabela como "user" em minúsculas
 }
 
 model Conversa {
   id      Int @id @default(autoincrement())
-  id_usu1 Int
-  id_usu2 Int
+  id_usu1 User @relation("id_usu1", fields: [userId1], references: [id])
+  id_usu2 User @relation("id_usu2", fields: [userId2], references: [id])
+  userId1 Int
+  userId2 Int
+  @@unique([userId1, userId2])
 
   @@map("conversa") // Define o nome da tabela como "conversa" em minúsculas
 }
